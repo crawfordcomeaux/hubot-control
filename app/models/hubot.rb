@@ -110,11 +110,7 @@ class Hubot < ActiveRecord::Base
 
   def self.find_free_ports
     ports = Hubot.select("max(port) as port, max(test_port) as test_port").first
-    if ports
-      return ports.port + 1, ports.test_port + 1
-    else
-      return 8000, 9000
-    end
+    return (ports.port || 8000), (ports.test_port || 9000)
   end
 
   private
